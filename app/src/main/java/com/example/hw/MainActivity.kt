@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     counter++
             }
         }.start()
+
     }
 
     override fun onDestroy() {
