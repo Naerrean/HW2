@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HW</string>
+    <string name="b1">Тыкай сюды</string>
+    <string name="t2">Арарат</string>
+    <string name="t1">Хэллоу пиплы</string>
+    <string name="b2">Тыдысч !!!</string>
+    <string name="channel_name">HW_CHANNEL</string>
+    <string name="channel_description">I just trying so much</string>
+</resources>
