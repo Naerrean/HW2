@@ -7,6 +7,6 @@ import android.os.IBinder
 class HWservice : Service() {
 
     override fun onBind(intent: Intent): IBinder {
-        TODO("fReturn XXX the communication channel to the service.")
+        TODO("Return the communication channel to the service.")
     }
 }
