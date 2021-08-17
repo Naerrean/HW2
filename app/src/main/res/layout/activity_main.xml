@@ -12,31 +12,31 @@
         android:id="@+id/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="78dp"
         android:background="@android:color/holo_orange_light"
         android:rotation="5"
         android:text="@string/b2"
         android:textColor="#5D4037"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tik"
-        app:layout_constraintVertical_bias="0.008" />
+        app:layout_constraintVertical_bias="0.186" />
 
     <TextView
         android:id="@+id/c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="78dp"
         android:background="@android:color/holo_orange_light"
         android:rotation="-5"
         android:text="@string/t1"
         android:textColor="#5D4037"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tik"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintTop_toBottomOf="@+id/Label"
+        app:layout_constraintVertical_bias="0.123" />
 
     <Button
         android:id="@+id/tik"
@@ -46,8 +46,28 @@
         android:onClick="clickBtn"
         android:text="@string/b1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:text="@string/stopName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tik"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/startName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tik"
+        app:layout_constraintEnd_toStartOf="@+id/tik"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
