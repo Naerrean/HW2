@@ -22,11 +22,11 @@ Java_com_example_hw_MainActivity_stringFromJNI(
             break;
         }
         case 3:{
-            hello = "Hello from TEST !!!";
+            hello = "Hello from TEST ?";
             break;
         }
         default:{
-            hello = "Dulya++";
+            hello = "Hello from C++ !!!";
             break;
         }
     }

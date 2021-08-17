@@ -10,7 +10,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.hw.databinding.ActivityMainBinding
 
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -41,11 +40,7 @@ class MainActivity : AppCompatActivity() {
                     binding.Label.rotation *= -1
                     binding.Label.text = stringFromJNI(counter)
                 }
-
-                if(counter > 2)
-                    counter = 0
-                else
-                    counter++
+                counter++
             }
         }.start()
     }
