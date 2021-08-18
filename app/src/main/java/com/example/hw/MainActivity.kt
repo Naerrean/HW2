@@ -1,8 +1,10 @@
 package com.example.hw
 
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -17,11 +19,13 @@ class MainActivity : AppCompatActivity() {
     private var flag: Boolean = false
     private var channelId: String = "101"
 
+
     companion object {
         init {
             System.loadLibrary("hw")
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,17 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         flag = false
         super.onDestroy()
+    }
+
+    fun startBtnClick(view: View){
+        Log.d("Rurri" , "startBtnClick")
+        val rintent = Intent(this, HWservice::class.java )
+        startService(rintent)
+    }
+
+    fun stopBtnClick(view: View){
+        val rintent = Intent(this, HWservice::class.java )
+        stopService(rintent)
     }
 
 
