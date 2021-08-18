@@ -9,7 +9,7 @@ class HWservice : Service() {
 
     private val tag = "Rurri"
     private var flag = false
-    var counter = 0
+    private var counter = 0
 
     override fun onBind(intent: Intent): IBinder? {
         return null

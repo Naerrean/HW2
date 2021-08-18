@@ -8,4 +8,6 @@
     <string name="channel_description">I just trying so much</string>
     <string name="startName">start</string>
     <string name="stopName">stop</string>
+    <string name="mOlOn">Служба уже запущенна</string>
+    <string name="mOlOff">Служба уже остановленна</string>
 </resources>

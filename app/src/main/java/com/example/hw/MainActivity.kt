@@ -1,11 +1,14 @@
 package com.example.hw
 
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private var counter: Int = 0
     private var flag: Boolean = false
     private var channelId: String = "101"
+    val ServiceHW = HWservice::class.java
 
 
     companion object {
@@ -57,12 +61,18 @@ class MainActivity : AppCompatActivity() {
     fun startBtnClick(view: View){
         Log.d("Rurri" , "startBtnClick")
         val rintent = Intent(this, HWservice::class.java )
-        startService(rintent)
+        if (!isServiceRunning(ServiceHW))
+            startService(rintent)
+        else
+            toast(getString(R.string.mOlOn))
     }
 
     fun stopBtnClick(view: View){
         val rintent = Intent(this, HWservice::class.java )
-        stopService(rintent)
+        if (isServiceRunning(ServiceHW))
+            stopService(rintent)
+        else
+            toast(getString(R.string.mOlOff))
     }
 
 
@@ -99,6 +109,18 @@ class MainActivity : AppCompatActivity() {
 
     private external fun stringFromJNI(key :Int): String
 
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
+        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
 
+    private fun Context.toast(message:String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
 }
