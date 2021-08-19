@@ -6,8 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var counter: Int = 0
     private var flag: Boolean = false
     private var channelId: String = "101"
-    val ServiceHW = HWservice::class.java
+    private val serviceHW = HWservice::class.java
 
 
     companion object {
@@ -51,45 +49,40 @@ class MainActivity : AppCompatActivity() {
                 counter++
             }
         }.start()
+
+        binding.startBtn.setOnClickListener {
+            if (!isServiceRunning(serviceHW))
+                startService(Intent(this, HWservice::class.java ))
+            else
+                toast(getString(R.string.mOlOn))
+        }
+
+        binding.stopBtn.setOnClickListener{
+            if (isServiceRunning(serviceHW))
+                stopService(Intent(this, HWservice::class.java ))
+            else
+                toast(getString(R.string.mOlOff))
+        }
+
+        binding.tik.setOnClickListener{
+            if (binding.tik.text != getString(R.string.b2)) {
+                binding.tik.text = getString(R.string.b2)
+                binding.Label.text = getString(R.string.t2)
+                binding.cl.setBackgroundColor(Color.CYAN)
+            }
+            else{
+                binding.tik.text = getString(R.string.b1)
+                binding.Label.text= getString(R.string.t1)
+                binding.cl.setBackgroundColor(Color.LTGRAY)
+            }
+
+            setNotification(binding.tik.text as String, "${binding.Label.text as String}  $counter раз ))")
+        }
     }
 
     override fun onDestroy() {
         flag = false
         super.onDestroy()
-    }
-
-    fun startBtnClick(view: View){
-        Log.d("Rurri" , "startBtnClick")
-        val rintent = Intent(this, HWservice::class.java )
-        if (!isServiceRunning(ServiceHW))
-            startService(rintent)
-        else
-            toast(getString(R.string.mOlOn))
-    }
-
-    fun stopBtnClick(view: View){
-        val rintent = Intent(this, HWservice::class.java )
-        if (isServiceRunning(ServiceHW))
-            stopService(rintent)
-        else
-            toast(getString(R.string.mOlOff))
-    }
-
-
-    fun clickBtn(view: View)
-    {
-        if (binding.tik.text != getString(R.string.b2)) {
-            binding.tik.text = getString(R.string.b2)
-            binding.Label.text = getString(R.string.t2)
-            binding.cl.setBackgroundColor(Color.CYAN)
-        }
-        else{
-            binding.tik.text = getString(R.string.b1)
-            binding.Label.text= getString(R.string.t1)
-            binding.cl.setBackgroundColor(Color.LTGRAY)
-        }
-
-        setNotification(binding.tik.text as String, "${binding.Label.text as String}  $counter раз ))")
     }
 
 

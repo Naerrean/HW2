@@ -43,7 +43,6 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="100dp"
-        android:onClick="clickBtn"
         android:text="@string/b1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -55,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
-        android:onClick="stopBtnClick"
         android:text="@string/stopName"
         app:layout_constraintBaseline_toBaselineOf="@+id/tik"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -65,7 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:onClick="startBtnClick"
         android:text="@string/startName"
         app:layout_constraintBaseline_toBaselineOf="@+id/tik"
         app:layout_constraintEnd_toStartOf="@+id/tik"
@@ -76,8 +73,11 @@
         android:id="@+id/textFromService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="41dp" />
+        android:text="@string/space"
+        app:layout_constraintBottom_toTopOf="@+id/tik"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
+
+
 
 class HWservice : Service() {
 
@@ -18,6 +21,7 @@ class HWservice : Service() {
     override fun onCreate() {
         super.onCreate()
         action("It's exist")
+        Toast.makeText(applicationContext, "It's exist", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -44,3 +48,4 @@ class HWservice : Service() {
         Log.d(tag , message)
     }
 }
+
