@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Моя версия привет мир</string>
     <string name="b1">Нажми на кнопку</string>
-    <string name="t2">Добрый день</string>
-    <string name="t1">Хэллоу пиплы</string>
     <string name="b2">А вот и результат!!!</string>
+    <string name="t1">День</string>
+    <string name="t2">Ночь</string>
     <string name="channel_name">HW_CHANNEL</string>
     <string name="channel_description">I just trying so much</string>
     <string name="startName">start</string>
