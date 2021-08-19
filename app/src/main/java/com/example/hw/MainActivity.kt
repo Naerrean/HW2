@@ -1,19 +1,21 @@
 package com.example.hw
 
 
-import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.os.IBinder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import com.example.hw.databinding.ActivityMainBinding
 
 
@@ -23,7 +25,21 @@ class MainActivity : AppCompatActivity() {
     private var counter: Int = 0
     private var flag: Boolean = false
     private var channelId: String = "101"
-    private val serviceHW = HWservice::class.java
+    private lateinit var mService: HWservice
+    private var mBound: Boolean = false
+
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as HWservice.LocalBinder
+            mService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            mBound = false
+        }
+    }
 
 
     companion object {
@@ -37,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         createNotificationChannel(channelId)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -57,15 +72,26 @@ class MainActivity : AppCompatActivity() {
         }.start()
 
         binding.startBtn.setOnClickListener {
-            if (!isServiceRunning(serviceHW))
-                startService(Intent(this, HWservice::class.java ))
+            if (!mBound) {
+
+                Intent(this, HWservice::class.java).also { intent ->
+                    bindService(intent, connection, Context.BIND_AUTO_CREATE)}
+                startService(Intent(this, HWservice::class.java))
+                binding.getfsBtn.isEnabled = true
+                binding.gifImageView.isVisible = true
+            }
             else
                 toast(getString(R.string.mOlOn))
         }
 
         binding.stopBtn.setOnClickListener{
-            if (isServiceRunning(serviceHW))
-                stopService(Intent(this, HWservice::class.java ))
+            if (mBound) {
+                unbindService(connection)
+                mBound = false
+                stopService(Intent(this, HWservice::class.java))
+                binding.getfsBtn.isEnabled = false
+                binding.gifImageView.isVisible = false
+            }
             else
                 toast(getString(R.string.mOlOff))
         }
@@ -85,8 +111,8 @@ class MainActivity : AppCompatActivity() {
             setNotification(binding.tik.text as String, "${binding.Label.text as String}  $counter раз ))")
         }
 
-        binding.sendBtn.setOnClickListener {
-            Intent(this, HWservice::class.java ).putExtra("val" , "counter.toString()")
+        binding.getfsBtn.setOnClickListener {
+            toast("Значение счетсчика службы : ${mService.getCounter}")
         }
     }
 
@@ -115,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     private fun setNotification(titleN: String , textN: String){
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_hammer)
             .setContentTitle(titleN)
             .setContentText(textN)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -128,18 +154,7 @@ class MainActivity : AppCompatActivity() {
 
     private external fun stringFromJNI(key :Int): String
 
-    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-
-        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                return true
-            }
-        }
-        return false
-    }
-
     private fun Context.toast(message:String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 }

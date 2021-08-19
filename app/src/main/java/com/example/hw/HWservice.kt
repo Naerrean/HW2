@@ -2,6 +2,7 @@ package com.example.hw
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
@@ -12,10 +13,18 @@ class HWservice : Service() {
 
     private val tag = "Rurri"
     private var flag = false
-    private var counter = 0
+    private var counterOfService = 0
+    private val binder = LocalBinder()
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
+    inner class LocalBinder : Binder() {
+        fun getService(): HWservice = this@HWservice
+    }
+
+    val getCounter: Int
+        get() = counterOfService
+
+    override fun onBind(intent: Intent): IBinder {
+        return binder
     }
 
     override fun onCreate() {
@@ -26,21 +35,18 @@ class HWservice : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         action("It's start working")
-        val valFrom = intent?.getStringExtra("val")
-        valFrom?.let {
-            Log.d(tag , "Счетчик из вне $valFrom")
-        }
 
         Thread {
             while (!flag){
-                counter++
-                action(counter.toString())
+                counterOfService++
+                action(counterOfService.toString())
                 Thread.sleep(1000)
             }
         }.start()
 
         return START_STICKY
     }
+
 
     override fun onDestroy() {
         flag = true
