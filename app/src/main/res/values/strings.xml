@@ -10,5 +10,6 @@
     <string name="stopName">stop</string>
     <string name="mOlOn">Служба уже запущенна</string>
     <string name="mOlOff">Служба уже остановленна</string>
-    <string name="space"> </string>
+    <string name="space">------</string>
+    <string name="send">send</string>
 </resources>

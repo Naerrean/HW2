@@ -26,6 +26,10 @@ class HWservice : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         action("It's start working")
+        val valFrom = intent?.getStringExtra("val")
+        valFrom?.let {
+            Log.d(tag , "Счетчик из вне $valFrom")
+        }
 
         Thread {
             while (!flag){
@@ -35,7 +39,7 @@ class HWservice : Service() {
             }
         }.start()
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onDestroy() {

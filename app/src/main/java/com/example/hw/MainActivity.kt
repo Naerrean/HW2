@@ -2,10 +2,14 @@ package com.example.hw
 
 
 import android.app.ActivityManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -31,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        createNotificationChannel(channelId)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -78,6 +84,10 @@ class MainActivity : AppCompatActivity() {
 
             setNotification(binding.tik.text as String, "${binding.Label.text as String}  $counter раз ))")
         }
+
+        binding.sendBtn.setOnClickListener {
+            Intent(this, HWservice::class.java ).putExtra("val" , "counter.toString()")
+        }
     }
 
     override fun onDestroy() {
@@ -85,6 +95,22 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    private fun createNotificationChannel(channelId:String) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "My Channel"
+            val channelDescription = "Channel Description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+            val channel = NotificationChannel(channelId,name,importance)
+            channel.apply {
+                description = channelDescription
+            }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
     private fun setNotification(titleN: String , textN: String){
 
@@ -114,6 +140,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun Context.toast(message:String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 }
