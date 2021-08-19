@@ -20,8 +20,7 @@ class HWservice : Service() {
         fun getService(): HWservice = this@HWservice
     }
 
-    val getCounter: Int
-        get() = counterOfService
+    val getCounter: Int get() = counterOfService
 
     override fun onBind(intent: Intent): IBinder {
         return binder

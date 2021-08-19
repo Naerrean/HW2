@@ -75,7 +75,8 @@ class MainActivity : AppCompatActivity() {
             if (!mBound) {
 
                 Intent(this, HWservice::class.java).also { intent ->
-                    bindService(intent, connection, Context.BIND_AUTO_CREATE)}
+                    bindService(intent, connection, Context.BIND_AUTO_CREATE)
+                }
                 startService(Intent(this, HWservice::class.java))
                 binding.getfsBtn.isEnabled = true
                 binding.gifImageView.isVisible = true
