@@ -43,6 +43,29 @@ android {
     buildFeatures {
         viewBinding true
     }
+////////////////////////////////////////////////////////////////////////////////////
+    task clearLibraryAar(type: Delete) {
+        delete fileTree("${deployAarPath}") {
+            include 'hw-**.aar'
+        }
+    }
+
+    task deployLibraryAar(type: Copy, dependsOn: clearLibraryAar) {
+        from('build/outputs/aar/')
+        into("${deployAarPath}")
+        include('hw-release.aar')
+        rename('hw-release.aar', 'hw-' + android.defaultConfig.versionName + '.aar')
+        doLast {
+            fileTree("${deployAarPath}"){ include { it.file.name ==~ "^hw-([0-9.]+).aar.meta\$" }}.each { f -> f.renameTo(file("${deployAarPath}/hw-" + android.defaultConfig.versionName + ".aar.meta")) }
+        }
+    }
+
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'bundleRelease') {
+            task.finalizedBy 'deployLibraryAar'
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////
 }
 
 
