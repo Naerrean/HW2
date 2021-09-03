@@ -27,13 +27,9 @@ public final class UnityBridge {
 
     // Пишем какую-нибудь функцию, которая будет отправлять сообщения в Unity
     public static void SendMessageToUnity(final String message, final String data) {
-        runOnUnityThread(new Runnable() {
-
-            @Override
-            public void run() {
-                if(javaMessageHandler != null) {
-                    javaMessageHandler.onMessage(message, data);
-                }
+        runOnUnityThread(() -> {
+            if(javaMessageHandler != null) {
+                javaMessageHandler.onMessage(message, data);
             }
         });
     }
