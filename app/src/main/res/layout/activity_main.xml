@@ -54,10 +54,11 @@
         android:id="@+id/stopBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
+        android:layout_marginStart="14dp"
         android:text="@string/stopName"
         app:layout_constraintBaseline_toBaselineOf="@+id/tik"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tik" />
 
     <Button
         android:id="@+id/startBtn"
